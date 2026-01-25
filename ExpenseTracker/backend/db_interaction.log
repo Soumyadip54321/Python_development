@@ -1,0 +1,350 @@
+2026-01-19 02:51:53,404 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-19 02:51:53,404 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-19 02:52:16,113 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-19 02:52:16,114 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-19 02:52:21,990 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-19 02:52:21,990 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-19 02:53:07,742 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-19 02:53:07,743 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-19 02:53:38,459 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-19 02:53:38,459 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-19 02:56:01,084 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-19 02:56:01,086 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-19 02:56:39,448 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-19 02:56:39,449 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 00:01:22,867 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-20 00:01:22,867 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 00:01:43,042 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-20 00:01:43,043 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 00:01:51,336 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-20 00:01:51,336 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 00:02:00,652 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-20 00:02:00,653 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 00:02:06,114 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-20 00:02:06,115 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 00:09:55,371 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-20 00:09:55,372 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 00:11:09,698 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-20 00:11:09,699 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 00:14:26,453 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-20 00:14:26,454 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 00:15:27,749 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-20 00:15:27,751 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 00:15:27,787 - db_interaction.log - INFO - Deleting data from database
+2026-01-20 00:15:27,787 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 00:15:27,810 - db_interaction.log - INFO - Inserting data into database
+2026-01-20 00:15:27,811 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 00:15:27,819 - db_interaction.log - INFO - Inserting data into database
+2026-01-20 00:15:27,819 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 00:15:27,824 - db_interaction.log - INFO - Inserting data into database
+2026-01-20 00:15:27,824 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 00:15:27,827 - db_interaction.log - INFO - Inserting data into database
+2026-01-20 00:15:27,827 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 00:15:27,830 - db_interaction.log - INFO - Inserting data into database
+2026-01-20 00:15:27,830 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 00:15:27,834 - db_interaction.log - INFO - Inserting data into database
+2026-01-20 00:15:27,834 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 00:17:09,644 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-20 00:17:09,647 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 00:18:19,952 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-20 00:18:19,954 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 00:18:30,239 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-20 00:18:30,240 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 00:18:44,499 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-20 00:18:44,500 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 10:34:17,330 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-20 10:34:17,331 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 10:34:52,650 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-20 10:34:52,651 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 10:35:00,440 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-20 10:35:00,441 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 10:35:10,783 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-20 10:35:10,785 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 10:37:17,113 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-20 10:37:17,114 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 11:41:06,013 - db_interaction.log - INFO - Fetching all expenses between dates
+2026-01-20 11:41:06,014 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 11:51:45,885 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-20 11:51:45,886 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 11:52:03,805 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-20 11:52:03,806 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 11:53:09,663 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-20 11:53:09,663 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 11:53:39,656 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-20 11:53:39,657 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 11:54:33,106 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-20 11:54:33,107 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 11:58:39,781 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-20 11:58:39,783 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 12:01:59,244 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-20 12:01:59,244 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 12:02:24,636 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-20 12:02:24,636 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 12:02:32,694 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-20 12:02:32,694 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 12:04:21,776 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-20 12:04:21,778 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 12:06:01,853 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-20 12:06:01,854 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 12:06:05,096 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-20 12:06:05,096 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 12:06:09,133 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-20 12:06:09,133 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 12:07:33,269 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-20 12:07:33,270 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 12:07:41,072 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-20 12:07:41,073 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 12:07:48,472 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-20 12:07:48,472 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 12:07:57,229 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-20 12:07:57,231 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 12:09:54,345 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-20 12:09:54,347 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 12:11:11,851 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-20 12:11:11,853 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 12:11:15,506 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-20 12:11:15,506 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 12:11:40,248 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-20 12:11:40,251 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 12:11:40,279 - db_interaction.log - INFO - Fetching all expenses between dates
+2026-01-20 12:11:40,279 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 23:41:55,699 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-20 23:41:55,701 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 23:42:26,877 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-20 23:42:26,879 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 23:42:26,927 - db_interaction.log - INFO - Fetching all expenses between dates
+2026-01-20 23:42:26,928 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 23:42:54,110 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-20 23:42:54,113 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 23:42:54,155 - db_interaction.log - INFO - Fetching all expenses between dates
+2026-01-20 23:42:54,155 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 23:44:13,051 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-20 23:44:13,053 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 23:44:25,029 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-20 23:44:25,032 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 23:44:25,059 - db_interaction.log - INFO - Fetching all expenses between dates
+2026-01-20 23:44:25,059 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 23:44:59,808 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-20 23:44:59,810 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 23:45:11,562 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-20 23:45:11,564 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 23:45:11,584 - db_interaction.log - INFO - Fetching all expenses between dates
+2026-01-20 23:45:11,584 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 23:45:53,348 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-20 23:45:53,350 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 23:46:03,966 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-20 23:46:03,967 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 23:46:03,996 - db_interaction.log - INFO - Fetching all expenses between dates
+2026-01-20 23:46:03,996 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 23:47:30,289 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-20 23:47:30,292 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 23:47:40,822 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-20 23:47:40,823 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 23:47:40,843 - db_interaction.log - INFO - Fetching all expenses between dates
+2026-01-20 23:47:40,843 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 23:48:52,488 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-20 23:48:52,490 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 23:49:05,603 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-20 23:49:05,606 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 23:49:05,632 - db_interaction.log - INFO - Fetching all expenses between dates
+2026-01-20 23:49:05,632 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 23:49:49,774 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-20 23:49:49,777 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 23:50:01,356 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-20 23:50:01,358 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 23:50:01,379 - db_interaction.log - INFO - Fetching all expenses between dates
+2026-01-20 23:50:01,379 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 23:51:44,269 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-20 23:51:44,272 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 23:51:54,617 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-20 23:51:54,618 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 23:51:54,641 - db_interaction.log - INFO - Fetching all expenses between dates
+2026-01-20 23:51:54,641 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 23:53:25,071 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-20 23:53:25,074 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 23:53:41,092 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-20 23:53:41,095 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-20 23:53:41,121 - db_interaction.log - INFO - Fetching all expenses between dates
+2026-01-20 23:53:41,121 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-21 00:05:08,863 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-21 00:05:08,865 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-21 00:05:21,462 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-21 00:05:21,465 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-21 00:05:21,508 - db_interaction.log - INFO - Fetching all expenses between dates
+2026-01-21 00:05:21,508 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-21 00:06:37,009 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-21 00:06:37,011 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-21 00:06:49,086 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-21 00:06:49,087 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-21 00:06:49,131 - db_interaction.log - INFO - Fetching all expenses between dates
+2026-01-21 00:06:49,131 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-21 00:09:26,546 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-21 00:09:26,549 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-21 00:09:35,702 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-21 00:09:35,705 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-21 00:09:35,736 - db_interaction.log - INFO - Fetching all expenses between dates
+2026-01-21 00:09:35,737 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-21 00:12:35,774 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-21 00:12:35,777 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-21 00:12:35,805 - db_interaction.log - INFO - Fetching all expenses between dates
+2026-01-21 00:12:35,805 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-21 00:12:57,669 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-21 00:12:57,672 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-21 00:13:10,681 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-21 00:13:10,682 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-21 00:13:10,713 - db_interaction.log - INFO - Fetching all expenses between dates
+2026-01-21 00:13:10,713 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-21 00:22:36,044 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-21 00:22:36,045 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-21 00:22:42,098 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-21 00:22:42,099 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-21 00:22:48,131 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-21 00:22:48,131 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-21 00:22:50,209 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-21 00:22:50,209 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-21 00:22:50,231 - db_interaction.log - INFO - Fetching all expenses between dates
+2026-01-21 00:22:50,231 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-21 00:24:27,252 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-21 00:24:27,253 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-21 00:25:06,293 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-21 00:25:06,293 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-21 00:25:36,226 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-21 00:25:36,227 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-21 00:25:48,597 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-21 00:25:48,598 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-21 00:25:48,637 - db_interaction.log - INFO - Fetching all expenses between dates
+2026-01-21 00:25:48,637 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-21 00:26:36,423 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-21 00:26:36,423 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-21 00:27:03,250 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-21 00:27:03,251 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-21 00:27:08,594 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-21 00:27:08,594 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-21 00:27:08,622 - db_interaction.log - INFO - Fetching all expenses between dates
+2026-01-21 00:27:08,622 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-21 00:28:58,262 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-21 00:28:58,264 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-21 00:29:04,736 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-21 00:29:04,736 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-21 00:29:04,779 - db_interaction.log - INFO - Fetching all expenses between dates
+2026-01-21 00:29:04,779 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-21 00:31:09,541 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-21 00:31:09,543 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-21 00:31:13,034 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-21 00:31:13,034 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-21 00:31:13,060 - db_interaction.log - INFO - Fetching all expenses between dates
+2026-01-21 00:31:13,060 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-21 00:33:58,160 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-21 00:33:58,163 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-21 00:34:00,992 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-21 00:34:00,992 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-21 00:34:01,015 - db_interaction.log - INFO - Fetching all expenses between dates
+2026-01-21 00:34:01,015 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-21 00:37:07,633 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-21 00:37:07,634 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-21 00:38:03,551 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-21 00:38:03,552 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-21 00:38:24,246 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-21 00:38:24,246 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-21 00:41:00,531 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-21 00:41:00,532 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-21 00:50:24,399 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-21 00:50:24,400 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-21 08:21:11,408 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-21 08:21:11,409 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-21 08:21:46,956 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-21 08:21:46,958 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-21 08:23:08,221 - db_interaction.log - INFO - Fetching all expenses between dates
+2026-01-21 08:23:08,225 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-21 08:40:09,900 - db_interaction.log - INFO - Fetching all expenses between dates
+2026-01-21 08:40:09,901 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-21 09:09:43,810 - db_interaction.log - INFO - Resetting database
+2026-01-21 09:09:43,813 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-21 09:15:34,254 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-21 09:15:34,257 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-21 09:16:08,724 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-21 09:16:08,725 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-21 09:17:10,480 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-21 09:17:10,482 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-21 09:18:45,920 - db_interaction.log - INFO - Fetching all expenses between dates
+2026-01-21 09:18:45,921 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-21 09:19:06,389 - db_interaction.log - INFO - Fetching all expenses between dates
+2026-01-21 09:19:06,389 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-22 13:22:56,563 - db_interaction.log - INFO - Inserting new user info into database
+2026-01-22 13:22:56,564 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-22 13:27:06,156 - db_interaction.log - INFO - Inserting new user info into database
+2026-01-22 13:27:06,157 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-23 12:22:36,095 - db_interaction.log - INFO - Checking if user exists in database
+2026-01-23 12:22:36,096 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-23 13:01:17,235 - db_interaction.log - INFO - Checking if user exists in database
+2026-01-23 13:01:17,236 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-23 14:06:17,752 - db_interaction.log - INFO - Checking if user exists in database
+2026-01-23 14:06:17,755 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-23 14:08:01,435 - db_interaction.log - INFO - Checking if user exists in database
+2026-01-23 14:08:01,436 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-23 14:14:59,641 - db_interaction.log - INFO - Checking if user exists in database
+2026-01-23 14:14:59,643 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-23 14:16:41,207 - db_interaction.log - INFO - Inserting new user info into database
+2026-01-23 14:16:41,207 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-23 14:19:03,579 - db_interaction.log - INFO - Checking if user exists in database
+2026-01-23 14:19:03,582 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-23 14:27:04,049 - db_interaction.log - INFO - Checking if user exists in database
+2026-01-23 14:27:04,052 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-23 14:29:13,532 - db_interaction.log - INFO - Checking if user exists in database
+2026-01-23 14:29:13,533 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-23 14:38:38,719 - db_interaction.log - INFO - Checking if user exists in database
+2026-01-23 14:38:38,720 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-23 14:48:31,159 - db_interaction.log - INFO - Checking if user exists in database
+2026-01-23 14:48:31,162 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-23 14:57:05,101 - db_interaction.log - INFO - Checking if user exists in database
+2026-01-23 14:57:05,106 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-23 15:13:37,976 - db_interaction.log - INFO - Checking if user exists in database
+2026-01-23 15:13:37,977 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-23 15:14:57,157 - db_interaction.log - INFO - Checking if user exists in database
+2026-01-23 15:14:57,158 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-23 15:15:05,537 - db_interaction.log - INFO - Checking if user exists in database
+2026-01-23 15:15:05,537 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-23 15:20:15,398 - db_interaction.log - INFO - Checking if user exists in database
+2026-01-23 15:20:15,399 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-23 15:23:02,433 - db_interaction.log - INFO - Checking if user exists in database
+2026-01-23 15:23:02,434 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-23 15:23:56,101 - db_interaction.log - INFO - Checking if user exists in database
+2026-01-23 15:23:56,102 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-23 15:29:41,278 - db_interaction.log - INFO - Checking if user exists in database
+2026-01-23 15:29:41,278 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-23 15:39:44,644 - db_interaction.log - INFO - Checking if user exists in database
+2026-01-23 15:39:44,644 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-23 16:19:35,583 - db_interaction.log - INFO - Checking if user exists in database
+2026-01-23 16:19:35,585 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-23 16:19:58,623 - db_interaction.log - INFO - Checking if user exists in database
+2026-01-23 16:19:58,624 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-23 16:26:17,639 - db_interaction.log - INFO - Checking if user exists in database
+2026-01-23 16:26:17,643 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-23 16:28:14,927 - db_interaction.log - INFO - Checking if user exists in database
+2026-01-23 16:28:14,930 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-23 16:29:08,290 - db_interaction.log - INFO - Checking if user exists in database
+2026-01-23 16:29:08,292 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-23 16:29:32,201 - db_interaction.log - INFO - Inserting new user info into database
+2026-01-23 16:29:32,203 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-23 16:30:20,520 - db_interaction.log - INFO - Checking if user exists in database
+2026-01-23 16:30:20,522 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-23 17:16:41,464 - db_interaction.log - INFO - Checking if user exists in database
+2026-01-23 17:16:41,466 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-23 17:17:13,171 - db_interaction.log - INFO - Inserting new user info into database
+2026-01-23 17:17:13,173 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-23 17:17:44,124 - db_interaction.log - INFO - Checking if user exists in database
+2026-01-23 17:17:44,127 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-23 17:21:15,948 - db_interaction.log - INFO - Checking if user exists in database
+2026-01-23 17:21:15,951 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-23 17:49:32,314 - db_interaction.log - INFO - Checking if user exists in database
+2026-01-23 17:49:32,316 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-25 12:15:29,845 - db_interaction.log - INFO - Checking if user exists in database
+2026-01-25 12:15:29,848 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-25 12:15:54,244 - db_interaction.log - INFO - Fetching all expenses between dates
+2026-01-25 12:15:54,245 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-25 13:49:58,036 - db_interaction.log - INFO - Checking if user exists in database
+2026-01-25 13:49:58,038 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-25 13:50:20,516 - db_interaction.log - INFO - Fetching all expenses for date
+2026-01-25 13:50:20,517 - db_interaction.log - INFO - Connecting to MySQL database
+2026-01-25 13:50:40,356 - db_interaction.log - INFO - Fetching all expenses between dates
+2026-01-25 13:50:40,356 - db_interaction.log - INFO - Connecting to MySQL database
