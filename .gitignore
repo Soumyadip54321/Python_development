@@ -1,5 +1,12 @@
 # Environment variables
 .env
+.venv/
+
+# DS_Store
+.DS_Store
 
 # IDE
 .idea/
+
+# APIs
+ExpenseTracker/frontend/.streamlit/secrets.toml
