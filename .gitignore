@@ -16,3 +16,6 @@ ExpenseTracker/frontend/.streamlit/secrets.toml
 ExpenseTracker/backend/__pycache__/
 ExpenseTracker/frontend/__pycache__/
 *.py[cod]
+
+# Log files
+ExpenseTracker/backend/*.log
