@@ -2,6 +2,20 @@
 
 An AI-powered expense management application that helps users track, analyze, and understand their spending habits through interactive dashboards and intelligent chatbot support.
 
+### 🔐 Login Page
+![Login Page](screenshots/login.png)
+
+### Registration Page
+![Registration Page](screenshots/registration_page.png)
+
+### 📊 Analytics Dashboard with summary generator
+![Analytics](screenshots/Analytics_tab_with_summary_generator.png)
+
+### 🤖 AI Chatbot and Add/update tab
+![Chatbot](screenshots/chatbot_and_add&update_dashboard.png)
+
+### Reset Tab
+![Reset](screenshots/reset_db_tab.png)
 ---
 
 ## 🚀 Features
@@ -114,6 +128,7 @@ An AI-powered expense management application that helps users track, analyze, an
         ├── pytest.toml
         ├── requirements.txt
         ├── README.md
+    ├──screenshots
 ```
 
 ---
