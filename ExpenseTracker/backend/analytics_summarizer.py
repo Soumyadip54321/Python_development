@@ -51,6 +51,8 @@ def draw_analytics_summary(df : pd.DataFrame):
     :param df:
     :return:
     '''
+    # set result
+    output = ""
 
     # convert dataframe to string that LLM's can process.
     df_text = df.to_string(index=False)
@@ -63,18 +65,3 @@ def draw_analytics_summary(df : pd.DataFrame):
             # capture progressively increasing response
             output += content[0]['text']
             yield output
-
-# if __name__ == '__main__':
-#     df = pd.DataFrame([
-#     {
-#         "category": "Other",
-#         "total": 85.0
-#     },
-#     {
-#         "category": "Entertainment",
-#         "total": 50.0
-#     }
-# ])
-#     for chunk in draw_analytics_summary(df):
-#         print(chunk,end="",flush=True)
-    # draw_analytics_summary(df)
