@@ -1,0 +1,5 @@
+[pytest]
+pythonpath = ["."]
+testpaths = [
+    "ExpenseTracker/test"
+]
