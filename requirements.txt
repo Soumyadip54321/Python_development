@@ -1,0 +1,16 @@
+openai>=2.33.0
+pandas>=3.0.2
+plotly>=5.22.0
+Requests>=2.33.1
+streamlit>=1.53.1
+fastapi==0.136.1
+langchain==1.2.17
+fastapi>=0.136.1
+langchain>=1.2.17
+langchain_community>=0.4.1
+langchain_openai>=1.2.1
+pydantic>=2.13.3
+pymysql>=1.1.2
+python-dotenv>=1.2.2
+SQLAlchemy>=2.0.49
+
