@@ -79,7 +79,7 @@ def login_user():
                 st.session_state.authenticated = True
                 st.session_state.userid = fetch_userid_from_username(username)
 
-                st.write(":green[You have successfully logged in!]")
+                st.write(":green[You have successfully logged in! Please wait while we get you in...]")
                 time.sleep(5)
                 st.rerun()
             # Ask user to register and re-login to simpex
