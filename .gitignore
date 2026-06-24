@@ -21,3 +21,6 @@ ExpenseTracker/frontend/__pycache__/
 # Log files
 ExpenseTracker/backend/*.log
 *.log
+
+# Package files
+*.egg-info/
