@@ -3,10 +3,12 @@ import pandas as pd
 import streamlit as st
 import datetime as dt
 
+from sqlalchemy import false
+
 category_types = ['Entertainment','Shopping','Food','Other','Rent','Electronics','Groceries']
 API_url = 'http://127.0.0.1:8000'
 
-def add_update():
+def add_update(user_id : str):
     '''
     UI Function to display expense tracker dashboard on Simpex.
     :return:
@@ -15,17 +17,24 @@ def add_update():
     date = st.date_input("Expense date to populate data for", value=dt.date.today(), format='YYYY/MM/DD')
     fetch_data = st.button('Fetch Data', type='primary')
 
-    if fetch_data:
+    if fetch_data or st.session_state.data_loaded:
+        # set session state to true so on re-run values populated remains and get updated to the database.
+        st.session_state.data_loaded = True
+
+        # st.write(date,user_id)
+
         # make API call to fetch data for date chosen if available
-        response = requests.get(f'{API_url}/expenses/{date}')
+        response = requests.get(f'{API_url}/expenses/{date}', params={'userid': user_id})
         if response.status_code == 200:
             existing_expenses = response.json()
         else:
             st.warning(f'Failed to fetch data. No data available for {date}. Please add expenses below first.')
             existing_expenses = []
 
+        # st.write(existing_expenses)
+
         # setup container to display and/or input data.
-        with st.form("expense_form", enter_to_submit=False, clear_on_submit=True):
+        with st.form("expense_form", enter_to_submit=False, clear_on_submit=False):
 
             # Create header row first
             header_col1, header_col2, header_col3 = st.columns(3)
@@ -69,21 +78,27 @@ def add_update():
                     notes = st.text_input("notes", value=notes, key=f'notes_{date}_{i}',
                                           label_visibility='collapsed')
 
-                # update expenses
-                expenses_on_date.append({
-                    'amount': amount,
-                    'category': category,
-                    'notes': notes,
-                })
+                # update expenses if amount > 0
+                if(amount > 0.0):
+                    expenses_on_date.append({
+                        'amount': amount,
+                        'category': category,
+                        'notes': notes,
+                    })
+
+            # prepare data for database update
+            user_expense_info = {'userid': int(user_id),'expenses': expenses_on_date}
 
             submitted = st.form_submit_button('Save', type='primary')
+            # st.write(user_expense_info)
+
             if submitted:
-                # filter expenses to contain only the entries with expenses incurred
-                filtered_expenses = [expense for expense in expenses_on_date if expense['amount'] > 0.0]
 
                 # submit filtered expenses to database using API
-                post_response = requests.post(f"{API_url}/expenses/{date}", json=filtered_expenses)
+                post_response = requests.post(f"{API_url}/expenses/{date}", json=user_expense_info)
                 if post_response.status_code == 200:
                     st.badge("Success: data saved.", color='green', icon=":material/check:")
                 else:
                     st.error('Failed to post')
+
+                st.session_state.data_loaded = False

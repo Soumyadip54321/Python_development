@@ -17,7 +17,7 @@ if authenticate_user():
         st.button("Logout",key='sidebar_logout_button',on_click=logout_user)
 
     # setup different tabs for different purposes.
-    tab_expense_tracker, tab_life_saver = st.tabs(['Expense Tracker','Life Saver'])
+    tab_expense_tracker = st.tabs(['Expense Tracker'])[0]
     # ----------------------------------------------------------- Expense Tracker ------------------------------------------------------------------------------------
     with tab_expense_tracker:
         # setup tabs
@@ -25,7 +25,7 @@ if authenticate_user():
 
         # Add/Update Tab: Add or update database with expenses incurred.
         with tab_add_update:
-            add_update()
+            add_update(st.session_state.userid)
 
         # Analytics Tab: Data displays category-wise expenses between the dates chosen.
         with tab_analytics:
@@ -33,7 +33,7 @@ if authenticate_user():
 
         # Reset Tab: This resets the database for the user i.e. removes all entries.
         with tab_reset:
-            reset()
+            reset(st.session_state.userid)
     #----------------------------------------------------------------------- CHAT BOT SETUP ------------------------------------------------------------------------------
     # Add Chatbot to sidebar
     with st.sidebar:

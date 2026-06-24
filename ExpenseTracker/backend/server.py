@@ -3,9 +3,8 @@ Script to setup backend server using FastAPI to fetch necessary information from
 '''
 from fastapi import FastAPI
 from datetime import date
-from typing import List
-
-import db_interaction
+from typing import List, Dict
+from ExpenseTracker.backend import db_interaction
 from pydantic import BaseModel
 
 # data validation for data fetched from database.
@@ -15,11 +14,15 @@ class Expense(BaseModel):
     category: str
     notes: str
 
-# data validation for new entry in database.
-class Expenses_posted(BaseModel):
+class AddExpenseDetails(BaseModel):
     amount: float
     category: str
     notes: str
+
+# data validation for new entry in database.
+class Expenses_posted(BaseModel):
+    userid: int
+    expenses: List[AddExpenseDetails]
 
     # checks for extra fields apart from the aforementioned ones and triggers failure when detected.
     model_config = {
@@ -39,35 +42,36 @@ class UserInfo(BaseModel):
 # initialize fastapi object
 app = FastAPI()
 
-@app.get("/expenses/{expense_date}",response_model = List[Expense])
-def get_expenses(expense_date: date):
+@app.get("/expenses/{expense_date}")
+def get_expenses(expense_date: date, userid):
     '''
     Fetches all expenses for a specific date using API.
-    :param expense_date:
+    :param expense_date: Date in ISO format
+    :param user_id: User ID
     :return:
     '''
     # fetch all data from the server
-    data = db_interaction.fetch_expenses_for_date(expense_date)
+    data = db_interaction.fetch_expenses_for_date(expense_date, int(userid))
 
     if data:
         return data
-    return {"message": "No expenses found"}
+    return [{'id': int(userid), 'amount': 0, 'category': 0, 'notes': ''}]
 
 @app.post("/expenses/{expense_date}")
-def add_update_database(expense_date: date, expenses: List[Expenses_posted]):
+def add_update_database(expense_date: date, user_expense_info: dict):
     '''
-    Creates a new expense and updates database using API. Also delete all expenses
-    :param expense_date:
-    :param expenses: list of expenses to add with each having parameters as indicated by pydantic
+    Removes all existing expenses if present in the database & updates database with new expenses.
+    :param expense_date: Date in ISO format
+    :param user_expense_info: list of expenses to add with each having parameters as indicated by pydantic
     :return:
     '''
 
     # delete all existing expense records for the date
-    # db_interaction.delete_from_database(expense_date)
+    db_interaction.delete_records_from_database_for_a_date(expense_date, user_expense_info['userid'])
 
-    # insert new expense records for the date.
-    for expense in expenses:
-        db_interaction.insert_into_database(expense_date, expense.amount, expense.category, expense.notes)
+    # insert updated expense records for the date.
+    for expense_info in user_expense_info['expenses']:
+        db_interaction.insert_into_database(expense_date, user_expense_info['userid'], expense_info['amount'], expense_info['category'], expense_info['notes'])
 
     return {"message": "expenses added successfully."}
 
@@ -85,14 +89,14 @@ def get_expenses_between_dates(date_range: DateRange):
         return data
     return {"message": "No expenses found"}
 
-@app.get("/reset/")
-def reset_database():
+@app.post("/reset/{userid}")
+def reset_database(userid: str):
     '''
     Resets database using API.
     :return:
     '''
 
-    db_interaction.reset_database()
+    db_interaction.reset_database(int(userid))
     return {"message": "database reset successfully"}
 
 

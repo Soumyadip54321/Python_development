@@ -63,7 +63,7 @@ def login_user():
     '''
 
     st.title("_Simp_:red[ex] 💰")
-    st.subheader("Your one stop solution for daily budgeting and hospital needs")
+    st.subheader(":red[Your one stop solution towards easier tracking of all expenses]")
 
     # setup login area
     with st.form(key='login_form',enter_to_submit=False,clear_on_submit=True):
@@ -94,6 +94,11 @@ def authenticate_user():
     Function that authenticates user and allow access to Simpex dashboard. In the event any user isn't logged in user registers and re-login.
     :return:
     '''
+
+    # store expenses in session state variable so it survives form re-runs
+    if "data_loaded" not in st.session_state:
+        st.session_state.data_loaded = False
+
     if 'authenticated' not in st.session_state:
         st.session_state.authenticated = False
 
@@ -123,4 +128,5 @@ def logout_user():
 
     # remove all session state attributes and rerun script.
     st.session_state.authenticated = False
+    st.session_state.data_loaded = False
     st.session_state.page = 'login'
