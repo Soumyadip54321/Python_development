@@ -5,17 +5,20 @@ import time
 import streamlit as st
 import requests
 from ExpenseTracker.backend.fetch_userid_and_userscope_tables import fetch_userid_from_username, create_user_views
+from pwdlib import PasswordHash
 
 API_URL = 'http://127.0.0.1:8000'
+# set Argon2 pwd hasher
+password_hash = PasswordHash.recommended()
 
-def check_user_access(username,password)->bool:
+def check_user_access(username,pwd)->bool:
     '''
     Function that checks if the user is already logged in or not by looking into database.
     :param username:
     :param password:
     :return:
     '''
-    user_info = {'username':username,'password':password}
+    user_info = {'username':username,'password':pwd}
 
     # check for user details in database
     response = requests.post(f'{API_URL}/login/',json=user_info)
@@ -39,13 +42,16 @@ def register_user():
 
     with st.form(key='register_form',enter_to_submit=False,clear_on_submit=True):
         username = st.text_input(label='Username: ', value='', key='reg_user', placeholder='Type your username here')
-        password = st.text_input(label='Password: ', value='', key='reg_password', placeholder='Type your password here')
+        password = st.text_input(label='Password: ', value='', key='reg_password', placeholder='Type your password here',type='password')
 
         submitted = st.form_submit_button(label='_Register_', help='Register on Simpex.', type='primary')
 
         # update new user information in database upon submission
         if submitted:
-            new_user_info.update({'username':username,'password':password})
+            # hash plain-text pwd
+            hashed_pwd = password_hash.hash(password)
+
+            new_user_info.update({'username':username,'hashed_pwd':hashed_pwd})
             response = requests.post(f'{API_URL}/register/',json=new_user_info)
 
             if response.status_code == 200:
@@ -57,8 +63,7 @@ def register_user():
 def login_user():
     '''
     UI Function that authenticates user and allow access to Simpex dashboard.
-    :param username:
-    :param password:
+    Hash plain-text pwd using Argon2 and store hashed pwd into database.
     :return:
     '''
 
@@ -68,7 +73,7 @@ def login_user():
     # setup login area
     with st.form(key='login_form',enter_to_submit=False,clear_on_submit=True):
         username = st.text_input(label='Username: ',value='',key='login_username',placeholder='Type your username here')
-        password = st.text_input(label='Password: ', value='', key='login_password', placeholder='Type your password here')
+        password = st.text_input(label='Password: ', value='', key='login_password', placeholder='Type your password here', type='password')
 
         submitted = st.form_submit_button('_Login_',type='primary')
 
