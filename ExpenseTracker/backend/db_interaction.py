@@ -7,12 +7,16 @@ import os
 from contextlib import contextmanager
 from ExpenseTracker.backend.logging_setup import setup_logger
 from datetime import date
+from pwdlib import PasswordHash
 
 # loads .env file
 load_dotenv()
 
 # create a custom logger
 logger = setup_logger("db_interaction.log", "db_interaction.log", "INFO")
+
+# setup passwordhash instance
+password_hash = PasswordHash.recommended()
 
 @contextmanager
 def get_db_cursor(to_be_commited=False):
@@ -138,38 +142,44 @@ def fetch_expenses_summary(expense_date1,expense_date2,userid : int):
         expenses = cursor.fetchall()
         return expenses
 
-def register_user(username,password):
+def register_user(username,hashed_pwd):
     '''
-    Function to insert new user info into database for authentication.
+    Function to insert new user info into database for authentication against hashed pwd.
     :param username:
-    :param password:
+    :param hashed_pwd:
     :return:
     '''
 
     logger.info('Inserting new user info into database')
 
     with get_db_cursor(to_be_commited=True) as cursor:
-        cursor.execute('insert into LOGGED_USERS (USERNAME, PASSWORD) values (%s, %s);', (username, password,))
+        cursor.execute('insert into LOGGED_USERS (USERNAME, PASSWORD) values (%s, %s);', (username, hashed_pwd,))
         # cursor._connection.commit()
 
-def check_for_logged_user(username,password):
+def check_for_logged_user(username,pwd):
     '''
-    Function to check if user exists in database
+    Function to check if user exists in database. It fetched hashed pwd against user from the database
+    and checks whether hashed pwd matches plain-text pwd provided by user at login time and then grants access.
     :param username:
-    :param password:
+    :param pwd:
     :return:
     '''
     logger.info('Checking if user exists in database')
 
     with get_db_cursor() as cursor:
-        cursor.execute('select * from LOGGED_USERS where USERNAME = %s and PASSWORD = %s;', (username,password))
-        result = cursor.fetchall()
-        return result
+        cursor.execute('select PASSWORD from LOGGED_USERS where USERNAME = %s;', (username,))
+        result = cursor.fetchone()
+        print(result)
+
+        if password_hash.verify(pwd, result['PASSWORD']):
+            return True
+        return False
 
 if __name__ == '__main__':
-    print(fetch_all_records())
+    # print(fetch_all_records())
     # fetch_expenses_for_date('2024-08-02')
-    insert_into_database('2025-01-01',5000.0,'Shopping','Purchased apparels')
+    # insert_into_database('2025-01-01',5000.0,'Shopping','Purchased apparels')
     # delete_from_database("2025-01-01")
     # fetch_expenses_for_date('2025-01-01')
     # fetch_expenses_categorywise_between_dates("2024-08-02","2024-12-31")
+    print(check_for_logged_user('sikdsou','Christiano#7'))
