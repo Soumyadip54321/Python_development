@@ -35,7 +35,11 @@ class DateRange(BaseModel):
     end: date
     userid: int
 
-class UserInfo(BaseModel):
+class RegisterUserInfo(BaseModel):
+    username: str
+    hashed_pwd: str
+
+class LoginUserInfo(BaseModel):
     username: str
     password: str
 
@@ -101,17 +105,17 @@ def reset_database(userid: str):
 
 
 @app.post("/register/")
-def insert_new_user_info(user_info: UserInfo):
+def insert_new_user_info(user_info: RegisterUserInfo):
     '''
-    Creates a new user info adhering to UserInfo class in database using API.
+    Creates a new user info with hashed pwd against it in database.
     :param user_info:
     :return:
     '''
-    db_interaction.register_user(user_info.username, user_info.password)
+    db_interaction.register_user(user_info.username, user_info.hashed_pwd)
     return {"message": "User registered successfully"}
 
 @app.post("/login/")
-def check_for_logged_in_user(user_info: UserInfo):
+def check_for_logged_in_user(user_info: LoginUserInfo):
     '''
     Checks if a user is logged in database using API.
     :param user_info:
