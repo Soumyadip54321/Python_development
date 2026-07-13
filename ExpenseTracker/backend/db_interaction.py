@@ -169,9 +169,23 @@ def check_for_logged_user(username,pwd):
     with get_db_cursor() as cursor:
         cursor.execute('select PASSWORD from LOGGED_USERS where USERNAME = %s;', (username,))
         result = cursor.fetchone()
-        print(result)
 
         if password_hash.verify(pwd, result['PASSWORD']):
+            return True
+        return False
+
+def check_for_duplicate_username(username):
+    '''
+    Function that checks whether there exists duplicate username in database.
+    :param username: username provided by user at the time of registration.
+    :return:
+    '''
+    logger.info('Checking if username exists in database')
+    with get_db_cursor() as cursor:
+        cursor.execute('select USERNAME from LOGGED_USERS where USERNAME = %s;',(username,))
+        result = cursor.fetchone()
+
+        if result:
             return True
         return False
 
@@ -182,4 +196,5 @@ if __name__ == '__main__':
     # delete_from_database("2025-01-01")
     # fetch_expenses_for_date('2025-01-01')
     # fetch_expenses_categorywise_between_dates("2024-08-02","2024-12-31")
-    print(check_for_logged_user('sikdsou','Christiano#7'))
+    # print(check_for_logged_user('sikdsou','Christiano#7'))
+    print(check_for_duplicate_username('messi'))
