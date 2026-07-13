@@ -43,6 +43,9 @@ class LoginUserInfo(BaseModel):
     username: str
     password: str
 
+class UserNamePayload(BaseModel):
+    username: str
+
 # initialize fastapi object
 app = FastAPI()
 
@@ -99,10 +102,8 @@ def reset_database(userid: str):
     Resets database using API.
     :return:
     '''
-
     db_interaction.reset_database(int(userid))
     return {"message": "database reset successfully"}
-
 
 @app.post("/register/")
 def insert_new_user_info(user_info: RegisterUserInfo):
@@ -113,6 +114,17 @@ def insert_new_user_info(user_info: RegisterUserInfo):
     '''
     db_interaction.register_user(user_info.username, user_info.hashed_pwd)
     return {"message": "User registered successfully"}
+
+@app.post("/check_for_same_username/")
+def check_for_same_username(username_info:UserNamePayload):
+    '''
+    Checks whether a username exists in database by comparison with data pulled from database.
+    :param username_info:
+    :return:
+    '''
+    if db_interaction.check_for_duplicate_username(username_info.username):
+        return {"result":True}
+    return {"result":False}
 
 @app.post("/login/")
 def check_for_logged_in_user(user_info: LoginUserInfo):
