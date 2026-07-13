@@ -11,6 +11,27 @@ API_URL = 'http://127.0.0.1:8000'
 # set Argon2 pwd hasher
 password_hash = PasswordHash.recommended()
 
+def is_duplicate_username(username)->bool:
+    '''
+    Function that checks whether a username is already taken or not.
+    :param username:
+    :return:
+    '''
+
+    username_info = {'username':username}
+
+    # check for presence of same username in database. In the event same username exists the register page reloads allowing to type in a different username.
+    try:
+        response = requests.post(f'{API_URL}/check_for_same_username/',json=username_info)
+        if response.status_code == 200:
+            response = response.json()
+            return response['result']
+    except requests.exceptions.ConnectionError:
+        st.write(":red[Couldn't connect to Simpex server. Please try again.]")
+        st.session_state.page = 'register'
+        time.sleep(5)
+        st.rerun()
+
 def check_user_access(username,pwd)->bool:
     '''
     Function that checks if the user is already logged in or not by looking into database.
@@ -40,7 +61,7 @@ def register_user():
 
     new_user_info = {}
 
-    with st.form(key='register_form',enter_to_submit=False,clear_on_submit=True):
+    with st.form(key='register_form',enter_to_submit=False,clear_on_submit=False):
         username = st.text_input(label='Username: ', value='', key='reg_user', placeholder='Type your username here')
         password = st.text_input(label='Password: ', value='', key='reg_password', placeholder='Type your password here',type='password')
 
@@ -48,6 +69,13 @@ def register_user():
 
         # update new user information in database upon submission
         if submitted:
+            # check for username. If a username already exists in the database prompts user to enter a different username instead by reloading register page
+            if is_duplicate_username(username):
+                st.write(':red[Username already taken!. Please register with a different username instead.]')
+                st.session_state.page = 'register'
+                time.sleep(5)
+                st.rerun()
+
             # hash plain-text pwd
             hashed_pwd = password_hash.hash(password)
 
@@ -71,7 +99,7 @@ def login_user():
     st.subheader(":red[Your one stop solution towards easier tracking of all expenses]")
 
     # setup login area
-    with st.form(key='login_form',enter_to_submit=False,clear_on_submit=True):
+    with st.form(key='login_form',enter_to_submit=False,clear_on_submit=False):
         username = st.text_input(label='Username: ',value='',key='login_username',placeholder='Type your username here')
         password = st.text_input(label='Password: ', value='', key='login_password', placeholder='Type your password here', type='password')
 
