@@ -5,65 +5,8 @@ import time
 import streamlit as st
 import requests
 from ExpenseTracker.backend.fetch_userid_and_userscope_tables import fetch_userid_from_username
-from pwdlib import PasswordHash
-import re
 
 API_URL = 'http://127.0.0.1:8000'
-# set Argon2 pwd hasher
-password_hash = PasswordHash.recommended()
-
-def rerun_on_invalid_password(password:str):
-    '''
-    Function that checks if the password is less than 8 characters long and has atleast one capital, one small letter, one digit and special character (#, @, _).
-    :param password:
-    :return:
-    '''
-
-    requirements = {
-        'Password must have 8 characters':len(password) >= 8,
-        'Password must have one capital letter':re.search('[A-Z]',password),
-        'Password must have one small letter':re.search('[a-z]',password),
-        'Password must have one digit':re.search('[0-9]',password),
-        'Password must have one special character':re.search('[!@#$]',password)
-    }
-
-    unfulfilled_requirements = [req for req, result in requirements.items() if result == False or result == None]
-
-    if unfulfilled_requirements:
-        st.markdown(f"<h6 style='color:red;text-align:center;'>Password is invalid!.Please use a valid password that satisfies the following missing requirements</h6>",unsafe_allow_html=True)
-
-        for req in unfulfilled_requirements:
-            req = "-"+req
-            st.markdown(f"<h6 style='color:white;text-align:center;'>{req}</h6>",unsafe_allow_html=True)
-
-        st.session_state.page = 'register'
-        time.sleep(5)
-        st.rerun()
-
-def rerun_on_duplicate_username(username):
-    '''
-    Function that checks whether a username is already taken or not. If taken it reruns and allows user to re-register with valid username.
-    :param username:
-    :return:
-    '''
-
-    username_info = {'username':username}
-
-    # check for presence of same username in database. In the event same username exists the register page reloads allowing to type in a different username.
-    try:
-        response = requests.post(f'{API_URL}/check_for_same_username/',json=username_info)
-        if response.status_code == 200:
-            response = response.json()
-            if response['result']:
-                st.markdown("<h6 style='color:red;text-align:center;'>Username already taken!. Please register with a different username instead.</h6>",unsafe_allow_html=True)
-                st.session_state.page = 'register'
-                time.sleep(5)
-                st.rerun()
-    except requests.exceptions.ConnectionError:
-        st.markdown("<h6 style='color:red;text-align:center;'>Couldn't connect to Simpex server. Please try again.</h6>",unsafe_allow_html=True)
-        st.session_state.page = 'register'
-        time.sleep(5)
-        st.rerun()
 
 def check_user_access(username,pwd)->bool:
     '''
@@ -112,25 +55,29 @@ def register_user():
             time.sleep(5)
             st.rerun()
 
-        # update new user information in database upon submission
+        # update new user information in database upon submission. It catches error due to invalid pwd or duplicate username and displays feedback on UI.
         if submitted:
-            # check for username. If a username already exists in the database prompts user to enter a different username instead by reloading register page
-            rerun_on_duplicate_username(username)
-
-            # check for pwd validity. If found invalid shows what went wrong and re-runs to allow user to enter a valid pwd to register.
-            rerun_on_invalid_password(password)
-
-            # hash plain-text pwd
-            hashed_pwd = password_hash.hash(password)
-
-            new_user_info.update({'username':username,'hashed_pwd':hashed_pwd})
+            new_user_info.update({'username':username,'password':password})
             response = requests.post(f'{API_URL}/register/',json=new_user_info)
 
             if response.status_code == 200:
                 st.write(":green[You have successfully registered!]. Please log in with your credentials to Simpex.Redirecting to login.")
                 st.session_state.page = 'login'
-                time.sleep(5)
-                st.rerun()
+            else:
+                if response.status_code == 400:
+                    st.markdown(f"<h6 style='color:red;text-align:center;'>Password is invalid!.Please use a valid password that satisfies the following missing requirements</h6>",unsafe_allow_html=True)
+                    errors = response.json()["detail"]
+                    for req in errors:
+                        req = "-" + req
+                        st.markdown(f"<h6 style='color:white;text-align:center;'>{req}</h6>", unsafe_allow_html=True)
+                else:
+                    error = response.json()["detail"]
+                    st.markdown(f"<h6 style='color:red;text-align:center;'>{error}</h6>", unsafe_allow_html=True)
+
+                st.session_state.page = 'register'
+
+            time.sleep(5)
+            st.rerun()
 
 def login_user():
     '''
