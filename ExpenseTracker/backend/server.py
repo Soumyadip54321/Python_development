@@ -1,11 +1,12 @@
 '''
 Script to setup backend server using FastAPI to fetch necessary information from database.
 '''
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from datetime import date
-from typing import List, Dict
+from typing import List
 from ExpenseTracker.backend import db_interaction
-from pydantic import BaseModel
+from pydantic import BaseModel, field_validator
+import re
 
 # data validation for data fetched from database.
 class Expense(BaseModel):
@@ -35,16 +36,35 @@ class DateRange(BaseModel):
     end: date
     userid: int
 
-class RegisterUserInfo(BaseModel):
+# data validation for new user registration
+class RegisterNewUser(BaseModel):
     username: str
-    hashed_pwd: str
+    password: str
+
+    @field_validator('password')
+    @classmethod
+    def validate_password(cls,password:str):
+        '''
+        Class method to validate password against user info
+        :param password:
+        :return:
+        '''
+        requirements = {
+            'Password must have 8 characters': len(password) >= 8,
+            'Password must have one capital letter': re.search('[A-Z]', password),
+            'Password must have one small letter': re.search('[a-z]', password),
+            'Password must have one digit': re.search('[0-9]', password),
+            'Password must have one special character': re.search('[!@#$]', password)
+        }
+        errors = [req for req, result in requirements.items() if result == False or result == None]
+
+        if errors:
+            raise HTTPException(status_code=400, detail=errors)
+        return password
 
 class LoginUserInfo(BaseModel):
     username: str
     password: str
-
-class UserNamePayload(BaseModel):
-    username: str
 
 # initialize fastapi object
 app = FastAPI()
@@ -106,25 +126,16 @@ def reset_database(userid: str):
     return {"message": "database reset successfully"}
 
 @app.post("/register/")
-def insert_new_user_info(user_info: RegisterUserInfo):
+def insert_new_user_info(new_user_info: RegisterNewUser):
     '''
-    Creates a new user info with hashed pwd against it in database.
-    :param user_info:
+    Creates a new user info with backend-driven hashed pwd saved against it in database given password & username passed meets all checks.
+    In case of duplicate username it raises an error returned to frontend.
+    :param new_user_info: New user information passed.
     :return:
     '''
-    db_interaction.register_user(user_info.username, user_info.hashed_pwd)
-    return {"message": "User registered successfully"}
 
-@app.post("/check_for_same_username/")
-def check_for_same_username(username_info:UserNamePayload):
-    '''
-    Checks whether a username exists in database by comparison with data pulled from database.
-    :param username_info:
-    :return:
-    '''
-    if db_interaction.check_for_duplicate_username(username_info.username):
-        return {"result":True}
-    return {"result":False}
+    db_interaction.register_user(new_user_info.username, new_user_info.password)
+    return {"message": "User registered successfully"}
 
 @app.post("/login/")
 def check_for_logged_in_user(user_info: LoginUserInfo):
