@@ -8,6 +8,7 @@ from contextlib import contextmanager
 from ExpenseTracker.backend.logging_setup import setup_logger
 from datetime import date
 from pwdlib import PasswordHash
+from fastapi import HTTPException
 
 # loads .env file
 load_dotenv()
@@ -142,23 +143,30 @@ def fetch_expenses_summary(expense_date1,expense_date2,userid : int):
         expenses = cursor.fetchall()
         return expenses
 
-def register_user(username,hashed_pwd):
+def register_user(username,password:str):
     '''
-    Function to insert new user info into database for authentication against hashed pwd.
+    Function to insert new user info into database for authentication against backend-driven hashed pwd.
+    In addition it also fetches database insertion failure when duplicate username is found.
     :param username:
     :param hashed_pwd:
     :return:
     '''
-
     logger.info('Inserting new user info into database')
 
-    with get_db_cursor(to_be_commited=True) as cursor:
-        cursor.execute('insert into LOGGED_USERS (USERNAME, PASSWORD) values (%s, %s);', (username, hashed_pwd,))
-        # cursor._connection.commit()
+    # hash password using argon2
+    hashed_pwd = password_hash.hash(password)
+
+    # store username and hashed-pwd in database. In case of duplicate username raises error.
+    try:
+        with get_db_cursor(to_be_commited=True) as cursor:
+            cursor.execute('insert into LOGGED_USERS (USERNAME, PASSWORD) values (%s, %s);', (username, hashed_pwd,))
+    except pymysql.err.IntegrityError as err:
+        if err.args[0] == 1062:
+            raise HTTPException(status_code=409, detail="User already exists!. Please choose a different username!")
 
 def check_for_logged_user(username,pwd):
     '''
-    Function to check if user exists in database. It fetched hashed pwd against user from the database
+    Function to check if user exists in database. It fetches hashed pwd against user from the database
     and checks whether hashed pwd matches plain-text pwd provided by user at login time and then grants access.
     :param username:
     :param pwd:
@@ -189,7 +197,7 @@ def check_for_duplicate_username(username):
             return True
         return False
 
-if __name__ == '__main__':
+# if __name__ == '__main__':
     # print(fetch_all_records())
     # fetch_expenses_for_date('2024-08-02')
     # insert_into_database('2025-01-01',5000.0,'Shopping','Purchased apparels')
@@ -197,4 +205,6 @@ if __name__ == '__main__':
     # fetch_expenses_for_date('2025-01-01')
     # fetch_expenses_categorywise_between_dates("2024-08-02","2024-12-31")
     # print(check_for_logged_user('sikdsou','Christiano#7'))
-    print(check_for_duplicate_username('messi'))
+    # print(check_for_duplicate_username('messi'))
+    # print(register_user(username="sikdsou",password="Tkinter@10"))
+
