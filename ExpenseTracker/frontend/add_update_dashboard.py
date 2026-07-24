@@ -2,13 +2,14 @@ import requests
 import pandas as pd
 import streamlit as st
 import datetime as dt
+from ExpenseTracker.frontend.auth_dashboard import get_auth_headers
 
 from sqlalchemy import false
 
 category_types = ['Entertainment','Shopping','Food','Other','Rent','Electronics','Groceries']
 API_url = 'http://127.0.0.1:8000'
 
-def add_update(user_id : str):
+def add_update():
     '''
     UI Function to display expense tracker dashboard on Simpex.
     :return:
@@ -21,10 +22,8 @@ def add_update(user_id : str):
         # set session state to true so on re-run values populated remains and get updated to the database.
         st.session_state.data_loaded = True
 
-        # st.write(date,user_id)
-
         # make API call to fetch data for date chosen if available
-        response = requests.get(f'{API_url}/expenses/{date}', params={'userid': user_id})
+        response = requests.get(f'{API_url}/add_update_expenses/{date}', headers=get_auth_headers())
         if response.status_code == 200:
             existing_expenses = response.json()
         else:
@@ -87,7 +86,7 @@ def add_update(user_id : str):
                     })
 
             # prepare data for database update
-            user_expense_info = {'userid': int(user_id),'expenses': expenses_on_date}
+            user_expense_info = {'expenses': expenses_on_date}
 
             submitted = st.form_submit_button('Save', type='primary')
             # st.write(user_expense_info)
@@ -95,7 +94,7 @@ def add_update(user_id : str):
             if submitted:
 
                 # submit filtered expenses to database using API
-                post_response = requests.post(f"{API_url}/expenses/{date}", json=user_expense_info)
+                post_response = requests.post(f"{API_url}/expenses/{date}", json=user_expense_info, headers=get_auth_headers())
                 if post_response.status_code == 200:
                     st.badge("Success: data saved.", color='green', icon=":material/check:")
                 else:
