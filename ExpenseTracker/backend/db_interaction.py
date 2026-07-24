@@ -7,17 +7,14 @@ import os
 from contextlib import contextmanager
 from ExpenseTracker.backend.logging_setup import setup_logger
 from datetime import date
-from pwdlib import PasswordHash
 from fastapi import HTTPException
+from ExpenseTracker.backend.auth import hash_password, verify_password
 
 # loads .env file
 load_dotenv()
 
 # create a custom logger
 logger = setup_logger("db_interaction.log", "db_interaction.log", "INFO")
-
-# setup passwordhash instance
-password_hash = PasswordHash.recommended()
 
 @contextmanager
 def get_db_cursor(to_be_commited=False):
@@ -99,8 +96,6 @@ def insert_into_database(expense_date,userid,amt,cat,notes):
 
     with get_db_cursor(to_be_commited=True) as cursor:
         cursor.execute("insert into expenses (id ,expense_date, amount, category, notes) values (%s, %s, %s, %s, %s);", (userid,expense_date,amt,cat,notes))
-        # In case of any change made to the database the change is temporarily stored unless commited.
-        # cursor._connection.commit()
 
 def delete_records_from_database_for_a_date(expense_date,userid):
     '''
@@ -112,7 +107,6 @@ def delete_records_from_database_for_a_date(expense_date,userid):
 
     with get_db_cursor(to_be_commited=True) as cursor:
         cursor.execute("delete from expenses where expense_date = %s and id = %s;", (expense_date,userid))
-        # cursor._connection.commit()
 
 def reset_database(user_id: int):
     '''
@@ -153,13 +147,10 @@ def register_user(username,password:str):
     '''
     logger.info('Inserting new user info into database')
 
-    # hash password using argon2
-    hashed_pwd = password_hash.hash(password)
-
     # store username and hashed-pwd in database. In case of duplicate username raises error.
     try:
         with get_db_cursor(to_be_commited=True) as cursor:
-            cursor.execute('insert into LOGGED_USERS (USERNAME, PASSWORD) values (%s, %s);', (username, hashed_pwd,))
+            cursor.execute('insert into LOGGED_USERS (USERNAME, PASSWORD) values (%s, %s);', (username, hash_password(password),))
     except pymysql.err.IntegrityError as err:
         if err.args[0] == 1062:
             raise HTTPException(status_code=409, detail="User already exists!. Please choose a different username!")
@@ -174,13 +165,18 @@ def check_for_logged_user(username,pwd):
     '''
     logger.info('Checking if user exists in database')
 
-    with get_db_cursor() as cursor:
-        cursor.execute('select PASSWORD from LOGGED_USERS where USERNAME = %s;', (username,))
-        result = cursor.fetchone()
+    try:
+        with get_db_cursor() as cursor:
+            cursor.execute('select USERNAME,PASSWORD,ID from LOGGED_USERS where USERNAME = %s;', (username,))
+            result = cursor.fetchone()
 
-        if password_hash.verify(pwd, result['PASSWORD']):
-            return True
-        return False
+        # on successful data fetch from database perform pwd and username validation
+        if verify_password(pwd, result['PASSWORD']) and result['USERNAME'] == username:
+            return (True, result['ID'])
+        return (False, None)
+    except:
+        logger.exception('User not found in database.')
+        raise HTTPException(status_code=404, detail="User not found in database.")
 
 def check_for_duplicate_username(username):
     '''
