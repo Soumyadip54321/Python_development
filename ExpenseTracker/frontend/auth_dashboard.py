@@ -8,21 +8,32 @@ from ExpenseTracker.backend.fetch_userid_and_userscope_tables import fetch_useri
 
 API_URL = 'http://127.0.0.1:8000'
 
-def check_user_access(username,pwd)->bool:
+def get_auth_headers():
+    token = st.session_state.access_token
+    if token:
+        return {'Authorization': f'Bearer {token}'}
+    return {}
+
+def check_user_access_and_fetch_id(username,pwd)->bool:
     '''
-    Function that checks if the user is already logged in or not by looking into database.
+    Function that checks if the user is already logged in or not by looking into database
+    and comparing plain-text pwd with hashed pwd created by server. If match is successful it returns
+    user id fetched from database.
     :param username:
-    :param password:
+    :param pwd:
     :return:
     '''
     user_info = {'username':username,'password':pwd}
 
-    # check for user details in database
+    # check for user details in database. In case match fails user is auto directed to registration page.If internal error display suitable message on UI and rerun login.
     response = requests.post(f'{API_URL}/login/',json=user_info)
     if response.status_code == 200:
-        is_logged_in = response.json()
-        return is_logged_in['result']
-
+        data = response.json()
+        access_token = data.get('access_token',"")
+        st.session_state.userid = data.get('user_id',"")
+        if access_token:
+            st.session_state.access_token = access_token
+            return True
     return False
 
 def register_user():
@@ -82,7 +93,8 @@ def register_user():
 def login_user():
     '''
     UI Function that authenticates user and allow access to Simpex dashboard.
-    It comes with a Register button so new users can register first. In case a new user does try to login the page redirects to registration.
+    It checks against username and hashed password stored in the database. In case of unavailability user is redirected to registration page.
+    In case of internal server error causing inability to fetch data from database login page is reloaded to allow users to fill-in credentials.
     :return:
     '''
 
@@ -113,9 +125,8 @@ def login_user():
         # On clicking the submit button perform the following actions.
         # Permit entry to already logged in users.
         if login_submitted:
-            if check_user_access(username,password):
+            if check_user_access_and_fetch_id(username,password):
                 st.session_state.authenticated = True
-                st.session_state.userid = fetch_userid_from_username(username)
 
                 st.write(":green[You have successfully logged in! Please wait while we get you in...]")
                 time.sleep(5)
@@ -136,6 +147,9 @@ def authenticate_user():
     # store expenses in session state variable so it survives form re-runs
     if "data_loaded" not in st.session_state:
         st.session_state.data_loaded = False
+
+    if "access_token" not in st.session_state:
+        st.session_state.access_token = ""
 
     if 'authenticated' not in st.session_state:
         st.session_state.authenticated = False
@@ -168,3 +182,6 @@ def logout_user():
     st.session_state.authenticated = False
     st.session_state.data_loaded = False
     st.session_state.page = 'login'
+    st.session_state.userid = ""
+    st.session_state.access_token = ""
+    st.session_state.messages = []
