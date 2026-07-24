@@ -44,7 +44,6 @@ class Expenses_posted(BaseModel):
 class DateRange(BaseModel):
     start: date
     end: date
-    userid: int
 
 # data validation for new user registration
 class RegisterNewUser(BaseModel):
