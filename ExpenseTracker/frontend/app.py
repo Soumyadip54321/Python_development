@@ -25,15 +25,15 @@ if authenticate_user():
 
         # Add/Update Tab: Add or update database with expenses incurred.
         with tab_add_update:
-            add_update(st.session_state.userid)
+            add_update()
 
         # Analytics Tab: Data displays category-wise expenses between the dates chosen.
         with tab_analytics:
-            get_analytics(st.session_state.userid)
+            get_analytics()
 
         # Reset Tab: This resets the database for the user i.e. removes all entries.
         with tab_reset:
-            reset(st.session_state.userid)
+            reset()
     #----------------------------------------------------------------------- CHAT BOT SETUP ------------------------------------------------------------------------------
     # Add Chatbot to sidebar
     with st.sidebar:
