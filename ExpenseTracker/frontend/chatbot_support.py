@@ -3,7 +3,6 @@ Script that sets up GPT-5.2 chatbot to be used in Simpex dashboard.
 '''
 
 import streamlit as st
-from openai import OpenAI
 from ExpenseTracker.backend.tool_based_sql_agent import LLM
 
 def init_chat_state():
@@ -31,7 +30,7 @@ def display_chat_message_history_on_apprun():
     '''
     for message in st.session_state.messages:
         with st.chat_message(message['role']):
-            st.markdown(message['content'])
+            st.markdown(message['message'])
 
 # create chat-bot integrating GPT-5.2
 def chatbot_response(userid : str):
