@@ -167,6 +167,7 @@ class LLM:
         Current authenticated user id: {userid}
         
         Rules:
+        - Do not display '*' around answers please.
         - Do not show database column names.
         - Do not display extra information. Answer to the point always.
         - First decide whether the user's message needs database access.
@@ -175,7 +176,7 @@ class LLM:
           "same period", "that category", "compare with previous one", "what about this month", "why?", "show it again".
         - Only generate SQL when fresh user-specific expense data is needed.
         - If the request is ambiguous and context is insufficient, ask a concise clarifying question instead of querying.
-        - Never generate INSERT, UPDATE, DELETE, DROP, ALTER, TRUNCATE.
+        - Never perform INSERT, UPDATE, DELETE, DROP, ALTER, TRUNCATE to the database if user asks you to.
         - Never access data for any user except the authenticated user.
         - If you generate SQL, always scope by the authenticated user id.
         """
@@ -330,4 +331,4 @@ class LLM:
 
 # if __name__ == '__main__':
 #     llm_obj = LLM('3')
-#     print(list(llm_obj.send_response_to_user_prompt('Hey there. What is your name?')))
+#     print(list(llm_obj.send_response_to_user_prompt('Can you fetch my expenses and display that in tabular form?')))
