@@ -1,128 +1,73 @@
 '''
 Script to setup backend server using FastAPI to fetch necessary information from database.
 '''
-from fastapi import FastAPI, HTTPException
-from datetime import date
-from typing import List
+from typing import Annotated
+from fastapi import FastAPI, Depends
+from datetime import date, timedelta
 from ExpenseTracker.backend import db_interaction
-from pydantic import BaseModel, field_validator
-import re
-
-# data validation for data fetched from database.
-class Expense(BaseModel):
-    id: int
-    amount: float
-    category: str
-    notes: str
-
-class AddExpenseDetails(BaseModel):
-    amount: float
-    category: str
-    notes: str
-
-# data validation for new entry in database.
-class Expenses_posted(BaseModel):
-    userid: int
-    expenses: List[AddExpenseDetails]
-
-    # checks for extra fields apart from the aforementioned ones and triggers failure when detected.
-    model_config = {
-        'extra' : 'forbid'
-    }
-
-# data validation for analytics tab
-class DateRange(BaseModel):
-    start: date
-    end: date
-    userid: int
-
-# data validation for new user registration
-class RegisterNewUser(BaseModel):
-    username: str
-    password: str
-
-    @field_validator('password')
-    @classmethod
-    def validate_password(cls,password:str):
-        '''
-        Class method to validate password against user info
-        :param password:
-        :return:
-        '''
-        requirements = {
-            'Password must have 8 characters': len(password) >= 8,
-            'Password must have one capital letter': re.search('[A-Z]', password),
-            'Password must have one small letter': re.search('[a-z]', password),
-            'Password must have one digit': re.search('[0-9]', password),
-            'Password must have one special character': re.search('[!@#$]', password)
-        }
-        errors = [req for req, result in requirements.items() if result == False or result == None]
-
-        if errors:
-            raise HTTPException(status_code=400, detail=errors)
-        return password
-
-class LoginUserInfo(BaseModel):
-    username: str
-    password: str
+from ExpenseTracker.backend.auth import DateRange,RegisterNewUser,LoginUserInfo,create_access_token,verify_access_token
+from ExpenseTracker.backend.config import settings
 
 # initialize fastapi object
 app = FastAPI()
 
-@app.get("/expenses/{expense_date}")
-def get_expenses(expense_date: date, userid):
+@app.get("/add_update_expenses/{expense_date}")
+def get_expenses(expense_date: date, userid: Annotated[int, Depends(verify_access_token)]):
     '''
     Fetches all expenses for a specific date using API.
     :param expense_date: Date in ISO format
-    :param user_id: User ID
+    :param userid: User ID fetched from JWT token.
     :return:
     '''
     # fetch all data from the server
-    data = db_interaction.fetch_expenses_for_date(expense_date, int(userid))
+    data = db_interaction.fetch_expenses_for_date(expense_date, userid)
 
     if data:
         return data
-    return [{'id': int(userid), 'amount': 0, 'category': 0, 'notes': ''}]
+    return [{'id': userid, 'amount': 0, 'category': 0, 'notes': ''}]
 
 @app.post("/expenses/{expense_date}")
-def add_update_database(expense_date: date, user_expense_info: dict):
+def add_update_database(expense_date: date, user_expense_info: dict, userid: Annotated[int, Depends(verify_access_token)]):
     '''
     Removes all existing expenses if present in the database & updates database with new expenses.
     :param expense_date: Date in ISO format
     :param user_expense_info: list of expenses to add with each having parameters as indicated by pydantic
+    :param userid: User ID fetched from JWT token.
     :return:
     '''
 
     # delete all existing expense records for the date
-    db_interaction.delete_records_from_database_for_a_date(expense_date, user_expense_info['userid'])
+    db_interaction.delete_records_from_database_for_a_date(expense_date, userid)
 
     # insert updated expense records for the date.
     for expense_info in user_expense_info['expenses']:
-        db_interaction.insert_into_database(expense_date, user_expense_info['userid'], expense_info['amount'], expense_info['category'], expense_info['notes'])
+        db_interaction.insert_into_database(expense_date, userid, expense_info['amount'], expense_info['category'], expense_info['notes'])
 
     return {"message": "expenses added successfully."}
 
 @app.post("/analytics/")
-def get_expenses_between_dates(date_range: DateRange):
+def get_expenses_between_dates(date_range: DateRange, userid: Annotated[int, Depends(verify_access_token)]):
     '''
     Fetches all expenses between expense dates using API.
     Here we use POST method to pass data in the body of the request.Data is validated for start & end dates such that only such dates are filtered out from the body.
-    :param expense_date: Start & end dates filtered out from the body of the request via validation.
+    :param date_range: Start & end dates filtered out from the body of the request via validation.
+    :param userid: User ID fetched from JWT token.
     :return:
     '''
-    data = db_interaction.fetch_expenses_summary(date_range.start, date_range.end, date_range.userid)
+    data = db_interaction.fetch_expenses_summary(date_range.start, date_range.end, userid)
 
     if data:
         return data
     return {"message": "No expenses found"}
 
-@app.post("/reset/{userid}")
-def reset_database(userid: str):
+@app.post("/reset/")
+def reset_database(userid: Annotated[int, Depends(verify_access_token)]):
     '''
     Resets database using API.
+    :param userid: User ID fetched from JWT token.
     :return:
     '''
-    db_interaction.reset_database(int(userid))
+    db_interaction.reset_database(userid)
     return {"message": "database reset successfully"}
 
 @app.post("/register/")
@@ -144,7 +89,12 @@ def check_for_logged_in_user(user_info: LoginUserInfo):
     :param user_info:
     :return:
     '''
-    data = db_interaction.check_for_logged_user(user_info.username, user_info.password)
-    if data:
-        return {'result':True}
-    return {'result':False}
+
+    result,userid = db_interaction.check_for_logged_user(user_info.username, user_info.password)
+
+    # on successful login create JWT token and send it to frontend
+    access_token = create_access_token(
+        data={"sub": str(userid)},
+        expires_delta=timedelta(minutes=settings.access_token_expire_minutes)
+    )
+    return {"access_token": access_token, "token_type": "bearer", "user_id": str(userid)}
