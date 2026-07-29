@@ -21,7 +21,7 @@ if authenticate_user():
     # ----------------------------------------------------------- Expense Tracker ------------------------------------------------------------------------------------
     with tab_expense_tracker:
         # setup tabs
-        tab_add_update, tab_analytics, tab_reset = st.tabs(['Add/Update', 'Analytics', 'Reset'])
+        tab_add_update, tab_analytics, tab_reset = st.tabs(['UpdateData', 'Analytics', 'Reset'])
 
         # Add/Update Tab: Add or update database with expenses incurred.
         with tab_add_update:
