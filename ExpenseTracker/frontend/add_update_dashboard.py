@@ -32,10 +32,7 @@ def delete_expenses(date : dt.date):
 
     with col2:
         if st.button("Cancel"):
-            st.write('Operation cancelled.')
-
             st.session_state.data_loaded = False
-            time.sleep(5)
             st.rerun()
 
 def add_update():
