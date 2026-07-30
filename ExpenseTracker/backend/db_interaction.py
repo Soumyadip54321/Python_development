@@ -2,6 +2,7 @@
 Script to demonstrate CRUD - Create Read Update Delete with MySQL database in python.
 '''
 import asyncio
+import pwd
 from typing import Tuple, List
 from dotenv import load_dotenv
 import os
@@ -17,6 +18,8 @@ from fastapi import HTTPException
 from ExpenseTracker.backend.auth import hash_password, verify_password
 from sqlalchemy import text
 from sqlalchemy.exc import IntegrityError
+from ExpenseTracker.backend.models import Expense,LoggedUsers
+from sqlalchemy import select, delete, func, desc
 
 # loads .env file
 load_dotenv()
@@ -65,8 +68,9 @@ async def fetch_all_records():
 
     # fetch db cursor
     async with get_db_cursor() as session:
-        # fetch all expenses
-        result = await session.execute(text("select * from expenses;"))
+        # fetch all expenses using ORM
+        stmt = select(Expense.id, Expense.expense_date, Expense.amount, Expense.category,Expense.notes)
+        result = await session.execute(stmt)
         expenses = result.mappings().all()
         return expenses
 
@@ -81,10 +85,9 @@ async def fetch_expenses_for_date(expense_date: date, userid : int):
 
     # fetch db cursor
     async with get_db_cursor() as session:
-        # fetch all expenses
-        # cursor.execute("select * from expenses where expense_date = %s and id = %s;", (expense_date,userid))
-        # expenses = cursor.fetchall()
-        result = await session.execute(text("select * from expenses where expense_date = :expense_date and id = :id"),{"expense_date":expense_date,"id":userid})
+        # result = await session.execute(text("select * from expenses where expense_date = :expense_date and id = :id"),{"expense_date":expense_date,"id":userid})
+        stmt = select(Expense.id,Expense.amount,Expense.category,Expense.notes).where(Expense.expense_date == expense_date, Expense.id == userid)
+        result = await session.execute(stmt)
         expenses = result.mappings().all()
         return expenses
 
@@ -108,21 +111,35 @@ async def update_expenses_in_database(expenses : List[Tuple]):
 
     async with get_db_cursor() as session:
         # delete existing records if any on the date - pause coroutine whilst session executes query and commits it
-        await session.execute(text("delete from expenses where id = :id and expense_date = :expense_date;"), {"id":userid,"expense_date":expense_date})
+        # await session.execute(text("delete from expenses where id = :id and expense_date = :expense_date;"), {"id":userid,"expense_date":expense_date})
+        stmt = delete(Expense).where(Expense.id == userid and Expense.expense_date == expense_date)
+        await session.execute(stmt)
         await session.commit()
 
         # insert new records for the date - pause the coroutine while session executes the query and commits it
-        await session.execute(text("insert into expenses (id ,expense_date, amount, category, notes) values (:id, :expense_date, :amount, :category, :notes);"),
-                              [
-                                  {
-                                      "id":expense[0],
-                                      "expense_date":expense[1],
-                                      "amount":expense[2],
-                                      "category":expense[3],
-                                      "notes":expense[4]
-                                  }
-                                  for expense in expenses
-                              ])
+        # await session.execute(text("insert into expenses (id ,expense_date, amount, category, notes) values (:id, :expense_date, :amount, :category, :notes);"),
+        #                       [
+        #                           {
+        #                               "id":expense[0],
+        #                               "expense_date":expense[1],
+        #                               "amount":expense[2],
+        #                               "category":expense[3],
+        #                               "notes":expense[4]
+        #                           }
+        #                           for expense in expenses
+        #                       ])
+        expense_objects = [
+            Expense(
+                id = expense[0],
+                expense_date = expense[1],
+                amount = expense[2],
+                category = expense[3],
+                notes = expense[4]
+            )
+            for expense in expenses
+        ]
+        # no await since here SQLAlchemy simply stores the objects into its in-memory collection to be inserted later to database.
+        session.add_all(expense_objects)
         await session.commit()
 
 async def delete_records_from_database_for_a_date(expense_date,userid):
@@ -134,7 +151,9 @@ async def delete_records_from_database_for_a_date(expense_date,userid):
     logger.info(f'Deleting data from database corresponding to expense date {expense_date} and user {userid}')
 
     async with get_db_cursor() as session:
-        await session.execute(text("delete from expenses where expense_date = :expense_date and id = :id;"), {"expense_date":expense_date,"id":userid})
+        # await session.execute(text("delete from expenses where expense_date = :expense_date and id = :id;"), {"expense_date":expense_date,"id":userid})
+        stmt = delete(Expense).where(Expense.id == userid,Expense.expense_date == expense_date)
+        await session.execute(stmt)
         await session.commit()
 
 async def reset_database(user_id: int):
@@ -146,7 +165,9 @@ async def reset_database(user_id: int):
     logger.info('Resetting database')
 
     async with get_db_cursor() as session:
-        await session.execute(text("delete from expenses where id = :id;"), {"id":user_id})
+        # await session.execute(text("delete from expenses where id = :id;"), {"id":user_id})
+        stmt = delete(Expense).where(Expense.id == user_id)
+        await session.execute(stmt)
         await session.commit()
 
 async def fetch_expenses_summary(expense_date1,expense_date2,userid : int):
@@ -161,7 +182,9 @@ async def fetch_expenses_summary(expense_date1,expense_date2,userid : int):
     logger.info('Fetching all expenses between dates')
 
     async with get_db_cursor() as session:
-        result = await session.execute(text("select category,sum(amount) as total from expenses where id = :id and expense_date between :date1 and :date2 group by category order by total desc;"),{"id":userid,"date1":expense_date1,"date2":expense_date2})
+        # result = await session.execute(text("select category,sum(amount) as total from expenses where id = :id and expense_date between :date1 and :date2 group by category order by total desc;"),{"id":userid,"date1":expense_date1,"date2":expense_date2})
+        stmt = select(Expense.category,func.sum(Expense.amount).label("total")).where(Expense.id == userid, Expense.expense_date.between(expense_date1, expense_date2)).group_by(Expense.category).order_by(desc('total'))
+        result = await session.execute(stmt)
         expenses = result.mappings().all()
         return expenses
 
@@ -170,7 +193,7 @@ async def register_user(username,password:str):
     Function to insert new user info into database for authentication against backend-driven hashed pwd.
     In addition it also fetches database insertion failure when duplicate username is found.
     :param username:
-    :param hashed_pwd:
+    :param password:
     :return:
     '''
     logger.info('Inserting new user info into database')
@@ -178,7 +201,9 @@ async def register_user(username,password:str):
     # store username and hashed-pwd in database. In case of duplicate username raises error.
     try:
         async with get_db_cursor() as session:
-            await session.execute(text('insert into LOGGED_USERS (USERNAME, PASSWORD) values (:username, :pwd);'), {"username":username, "pwd":hash_password(password)})
+            # await session.execute(text('insert into LOGGED_USERS (USERNAME, PASSWORD) values (:username, :pwd);'), {"username":username, "pwd":hash_password(password)})
+            logged_user = LoggedUsers(username=username,password=hash_password(password))
+            session.add(logged_user)
             await session.commit()
     except IntegrityError as err:
         if err.orig.args[0] == 1062:
@@ -196,7 +221,9 @@ async def check_for_logged_user(username,pwd):
 
     try:
         async with get_db_cursor() as session:
-            result = await session.execute(text('select USERNAME,PASSWORD,ID from LOGGED_USERS where USERNAME = :username;'), {"username":username})
+            # result = await session.execute(text('select USERNAME,PASSWORD,ID from LOGGED_USERS where USERNAME = :username;'), {"username":username})
+            stmt = select(LoggedUsers.USERNAME,LoggedUsers.PASSWORD,LoggedUsers.ID).where(LoggedUsers.USERNAME == username)
+            result = await session.execute(stmt)
             result = result.mappings().first()
 
         # on successful data fetch from database perform pwd and username validation
@@ -215,7 +242,9 @@ async def check_for_duplicate_username(username):
     '''
     logger.info('Checking if username exists in database')
     async with get_db_cursor() as session:
-        result = await session.execute(text('select USERNAME from LOGGED_USERS where USERNAME = :username;'),{"username":username})
+        # result = await session.execute(text('select USERNAME from LOGGED_USERS where USERNAME = :username;'),{"username":username})
+        stmt = select(LoggedUsers.USERNAME).where(LoggedUsers.USERNAME == username)
+        result = await session.execute(stmt)
         result = result.mappings().first()
 
         if result:
