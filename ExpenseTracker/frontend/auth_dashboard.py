@@ -26,7 +26,7 @@ def check_user_access_and_fetch_id(username,pwd)->bool:
     user_info = {'username':username,'password':pwd}
 
     # check for user details in database. In case match fails user is auto directed to registration page.If internal error display suitable message on UI and rerun login.
-    response = requests.post(f'{API_URL}/login/',json=user_info)
+    response = requests.post(f'{API_URL}/auth/login/',json=user_info)
     if response.status_code == 200:
         data = response.json()
         access_token = data.get('access_token',"")
@@ -69,7 +69,7 @@ def register_user():
         # update new user information in database upon submission. It catches error due to invalid pwd or duplicate username and displays feedback on UI.
         if submitted:
             new_user_info.update({'username':username,'password':password})
-            response = requests.post(f'{API_URL}/register/',json=new_user_info)
+            response = requests.post(f'{API_URL}/auth/register/',json=new_user_info)
 
             if response.status_code == 200:
                 st.write(":green[You have successfully registered!]. Please log in with your credentials to Simpex.Redirecting to login.")
