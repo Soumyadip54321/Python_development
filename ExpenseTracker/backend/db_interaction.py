@@ -85,8 +85,7 @@ async def fetch_expenses_for_date(expense_date: date, userid : int):
 
     # fetch db cursor
     async with get_db_cursor() as session:
-        # result = await session.execute(text("select * from expenses where expense_date = :expense_date and id = :id"),{"expense_date":expense_date,"id":userid})
-        stmt = select(Expense.id,Expense.amount,Expense.category,Expense.notes).where(Expense.expense_date == expense_date, Expense.id == userid)
+        stmt = select(Expense.amount,Expense.category,Expense.notes).where(Expense.expense_date == expense_date, Expense.id == userid)
         result = await session.execute(stmt)
         expenses = result.mappings().all()
         return expenses
@@ -112,22 +111,10 @@ async def update_expenses_in_database(expenses : List[Tuple]):
     async with get_db_cursor() as session:
         # delete existing records if any on the date - pause coroutine whilst session executes query and commits it
         # await session.execute(text("delete from expenses where id = :id and expense_date = :expense_date;"), {"id":userid,"expense_date":expense_date})
-        stmt = delete(Expense).where(Expense.id == userid and Expense.expense_date == expense_date)
+        stmt = delete(Expense).where(Expense.id == userid,Expense.expense_date == expense_date)
         await session.execute(stmt)
         await session.commit()
 
-        # insert new records for the date - pause the coroutine while session executes the query and commits it
-        # await session.execute(text("insert into expenses (id ,expense_date, amount, category, notes) values (:id, :expense_date, :amount, :category, :notes);"),
-        #                       [
-        #                           {
-        #                               "id":expense[0],
-        #                               "expense_date":expense[1],
-        #                               "amount":expense[2],
-        #                               "category":expense[3],
-        #                               "notes":expense[4]
-        #                           }
-        #                           for expense in expenses
-        #                       ])
         expense_objects = [
             Expense(
                 id = expense[0],
